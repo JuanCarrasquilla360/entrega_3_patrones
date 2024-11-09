@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 
-# Interface State
 class State(ABC):
     @abstractmethod
     def move(self) -> str:
@@ -14,7 +13,6 @@ class State(ABC):
     def receive_damage(self) -> str:
         pass
 
-# Estados Concretos
 class NormalState(State):
     def move(self) -> str:
         return "Moviéndose a velocidad normal"
@@ -55,7 +53,6 @@ class ImmuneState(State):
     def receive_damage(self) -> str:
         return "Inmune al daño - 0 de daño recibido"
 
-# Clase Contexto
 class Character:
     def __init__(self):
         self._state = NormalState()
@@ -73,31 +70,30 @@ class Character:
     def receive_damage(self) -> str:
         return self._state.receive_damage()
 
-# Ejemplo de uso
 def main():
     character = Character()
     
-    # Estado Normal
+
     print("Estado Normal:")
     print(character.move())
     print(character.attack())
     print(character.receive_damage())
     
-    # Cambio a Estado Potenciado
+
     print("\nCambiando a Estado Potenciado:")
     print(character.change_state(PoweredState()))
     print(character.move())
     print(character.attack())
     print(character.receive_damage())
     
-    # Cambio a Estado Herido
+
     print("\nCambiando a Estado Herido:")
     print(character.change_state(InjuredState()))
     print(character.move())
     print(character.attack())
     print(character.receive_damage())
     
-    # Cambio a Estado Inmune
+
     print("\nCambiando a Estado Inmune:")
     print(character.change_state(ImmuneState()))
     print(character.move())

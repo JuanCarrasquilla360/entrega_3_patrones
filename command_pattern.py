@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 
-# Receptor
 class MusicPlayer:
     def __init__(self):
         self.is_playing = False
@@ -18,10 +17,9 @@ class MusicPlayer:
     
     def set_volume(self, volume: int):
         old_volume = self.volume
-        self.volume = max(0, min(100, volume))  # Asegurar que esté entre 0 y 100
+        self.volume = max(0, min(100, volume)) 
         return f"Volumen cambiado de {old_volume} a {self.volume}"
 
-# Interfaz Command
 class Command(ABC):
     @abstractmethod
     def execute(self) -> str:
@@ -31,7 +29,6 @@ class Command(ABC):
     def undo(self) -> str:
         pass
 
-# Comandos Concretos
 class PlayCommand(Command):
     def __init__(self, player: MusicPlayer):
         self.player = player
@@ -64,7 +61,6 @@ class VolumeCommand(Command):
     def undo(self) -> str:
         return self.player.set_volume(self.prev_volume)
 
-# Invocador
 class MusicController:
     def __init__(self):
         self._history: List[Command] = []
@@ -79,31 +75,30 @@ class MusicController:
             return command.undo()
         return "No hay comandos para deshacer"
 
-# Ejemplo de uso
 def main():
-    # Crear el reproductor y el controlador
+
     player = MusicPlayer()
     controller = MusicController()
     
-    # Crear comandos
+
     play_command = PlayCommand(player)
     pause_command = PauseCommand(player)
     volume_up_command = VolumeCommand(player, 75)
     volume_down_command = VolumeCommand(player, 25)
     
-    # Ejecutar comandos
+
     print("Ejecutando comandos:")
     print(controller.execute_command(play_command))
     print(controller.execute_command(volume_up_command))
     print(controller.execute_command(pause_command))
     print(controller.execute_command(volume_down_command))
     
-    # Deshacer comandos
+
     print("\nDeshaciendo comandos:")
-    print(controller.undo_last_command())  # Deshace volume_down
-    print(controller.undo_last_command())  # Deshace pause
-    print(controller.undo_last_command())  # Deshace volume_up
-    print(controller.undo_last_command())  # Deshace play
+    print(controller.undo_last_command()) 
+    print(controller.undo_last_command()) 
+    print(controller.undo_last_command()) 
+    print(controller.undo_last_command()) 
 
 if __name__ == "__main__":
     main()
